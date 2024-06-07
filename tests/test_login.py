@@ -10,6 +10,13 @@ from utilities.tools import TestResultEvaluator
 class TestLogin:
     @allure.title("Login successful")
     def test_login_successful(self):
+        """
+        Verify admin login functionality.
+
+        Steps:
+        1. Authenticate as Admin.
+        2. Check login status.
+        """
         admin = Admin()
         admin.authenticate()
         expected = login_test_data.login_successful["message"]
@@ -23,6 +30,13 @@ class TestLogin:
 
     @allure.title("Login failed -> Invalid credentials")
     def test_login_invalid_credentials(self):
+        """
+        Verify admin login failure with incorrect credentials.
+
+        Steps:
+        1. Attempt to authenticate with invalid credentials.
+        2. Check login status.
+        """
         admin = Admin(auto_login=False, username="test", password="test")
         admin.authenticate()
         expected = login_test_data.login_failed["message"]

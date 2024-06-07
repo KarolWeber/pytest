@@ -1,5 +1,6 @@
 import allure
 from src.api.endpoints import Endpoints
+from test_data import booking_test_data
 from utilities.helpers import api_call, HttpMethod
 from utilities.payload_creator import PayloadCreator
 from utilities.tools import build_url_with_query_params
@@ -31,7 +32,10 @@ class Booking:
         return response
 
     @allure.step("Create booking")
-    def create(self, firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds):
+    def create(self, firstname=booking_test_data.booking_create['firstname'], lastname=booking_test_data.booking_create['lastname'],
+               totalprice=booking_test_data.booking_create['totalprice'], depositpaid=booking_test_data.booking_create['depositpaid'],
+               checkin=booking_test_data.booking_create['checkin'], checkout=booking_test_data.booking_create['checkout'],
+               additionalneeds=booking_test_data.booking_create['additionalneeds']):
         payload = PayloadCreator.Booking.create_booking_payload(firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds)
         response = api_call(method=HttpMethod.POST, url=Endpoints.booking, data=payload)
         if response.status_code == 200:
@@ -54,4 +58,7 @@ class Booking:
             return response.json()
         return response
 
+    @allure.step("Delete booking")
+    def delete(self, booking_id):
+        return api_call(method=HttpMethod.DELETE, url=f'{Endpoints.booking}/{booking_id}', user=self._token)
 

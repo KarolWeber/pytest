@@ -22,8 +22,7 @@ class TestResultEvaluator:
     @staticmethod
     def compare_results(info, expected_result, current_result):
         status = expected_result == current_result
-        left_lust = 76 if status is True else 75
-        info = f'{info.ljust(left_lust)}{str(status)}\nExpected: {expected_result}\nCurrent : {current_result}'
+        info = f'{info.ljust(76 if status is True else 75)}{str(status)}\nExpected: {expected_result}\nCurrent : {current_result}'
         return {"status": status, "info": info}
 
 

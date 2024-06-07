@@ -17,7 +17,6 @@ class Admin:
         self.token = None
         self.login_status = None
 
-        self.authenticate()
         self.booking = Booking(self)
 
     @allure.step("Admin login")
@@ -33,6 +32,7 @@ class Admin:
             if token:
                 self.token = token
                 self.login_status = "Login successful"
+                self.booking = Booking(self)
             else:
                 self.login_status = json_response.get("reason")
         else:
